@@ -25,7 +25,7 @@ export class BlackHole {
 
   async loadMesh() {
     const gltf = await this.loader.loadAsync(
-      "/portfolio/models/dark/scene.gltf"
+      "/spaceportfolio/models/dark/scene.gltf"
     );
     this.mesh = gltf.scene;
     this.animation = gltf.animations;

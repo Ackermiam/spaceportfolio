@@ -23,7 +23,7 @@ export class Logic {
     this.cameraSteps = [
       { x: 10, y: 5, z: 0 },  // Étape 0 : Position initiale
       { x: 0, y: 0, z: 5 },  // Étape 1 : Position intermédiaire
-      { x: -25, y: -10, z: 20 } // Étape 2 : Position finale
+      { x: -25, y: -30, z: 20 } // Étape 2 : Position finale
     ];
     this.scrollProgress = 0;
     const { width, height } = ref.getBoundingClientRect();
