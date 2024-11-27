@@ -6,7 +6,7 @@ import {
   DirectionalLight
 } from "three";
 
-import { BlackHole } from "./hole.ts";
+import { BlackHole } from "../models/hole.ts";
 
 export class Logic {
   scene: Scene;
@@ -21,9 +21,10 @@ export class Logic {
 
   constructor(ref: HTMLElement) {
     this.cameraSteps = [
-      { x: 10, y: 5, z: 0 },  // Étape 0 : Position initiale
-      { x: 0, y: 0, z: 5 },  // Étape 1 : Position intermédiaire
-      { x: -25, y: -30, z: 20 } // Étape 2 : Position finale
+      { x: 15, y: 5, z: 0 },
+      { x: 0, y: 1, z: 5 },
+      { x: -15, y: 1, z: 10 },
+      { x: -5, y: -20, z: 5 }
     ];
     this.scrollProgress = 0;
     const { width, height } = ref.getBoundingClientRect();
@@ -36,10 +37,9 @@ export class Logic {
       45,
       width / height
     );
-    this.camera.position.set(10, 5, 0);
+    this.camera.position.set(15, 5, 0);
     this.camera.lookAt(0, 3, 0);
 
-    console.log(height)
 
     this.renderer = new WebGLRenderer({ antialias: true });
     this.renderer.setClearColor(0, 0);
@@ -109,12 +109,12 @@ export class Logic {
     });
 
     window.addEventListener("scroll", () => {
-      const scrollableHeight = (this.height * 3) - window.innerHeight;
+      const scrollableHeight = (this.height * 4) - window.innerHeight;
       this.scrollProgress = window.scrollY / scrollableHeight;
 
-      const segmentCount = this.cameraSteps.length - 1; // Nombre de segments (2 dans cet exemple)
+      const segmentCount = this.cameraSteps.length - 1;
       const segmentProgress = this.scrollProgress * segmentCount; // Progression totale multipliée par les segments
-      const currentSegment = Math.floor(segmentProgress); // Segment actif (0 ou 1 dans cet exemple)
+      const currentSegment = Math.floor(segmentProgress); // Segment actif
       const segmentFraction = segmentProgress - currentSegment; // Progression relative dans le segment actuel
 
       // Limiter le segment pour rester dans la plage [0, segmentCount - 1]
