@@ -21,13 +21,15 @@ export class Logic {
   ref: HTMLElement;
   cameraSteps: { x: number; y: number; z: number }[];
 
-  constructor(ref: HTMLElement) {
+  constructor(ref: HTMLElement, refToAppend: HTMLElement) {
     this.cameraSteps = [
       { x: 0, y: 0.5, z: 0.7 },
-      { x: 0, y: 0.5, z: 0.7 },
+      { x: 1, y: 0.5, z: 0.7 },
+      { x: 3, y: 2, z: -1.5 },
       { x: 3, y: 2, z: -1 },
       { x: 0, y: 0.5, z: 0.7 },
-      { x: 3, y: 2, z: -1 },
+      { x: 3, y: 2, z: -1.5 },
+      { x: 0, y: 0.5, z: 0.7 },
     ];
     this.scrollProgress = 0;
     const { width, height } = ref.getBoundingClientRect();
@@ -56,7 +58,7 @@ export class Logic {
     const light = new AmbientLight( 0x404040, 30 );
     this.scene.add( light );
 
-    ref.appendChild(this.renderer.domElement);
+    refToAppend.appendChild(this.renderer.domElement);
 
     const machine = new Machine(width);
 
@@ -114,20 +116,21 @@ export class Logic {
     window.addEventListener("scroll", () => {
       if (!this.isSectionVisible()) return;
 
-      const scrollableHeight = (this.height * 5) - window.innerHeight;
-      this.scrollProgress = window.scrollY / scrollableHeight;
+      const distanceFromTop = this.ref.offsetTop - window.scrollY
+      const sectionHeight = this.ref.offsetHeight
+      const progress = distanceFromTop / sectionHeight
 
       const segmentCount = this.cameraSteps.length - 1;
-      const segmentProgress = this.scrollProgress * segmentCount; // Progression totale multipliée par les segments
+      const segmentProgress = progress * segmentCount; // Progression totale multipliée par les segments
       let currentSegment = Math.floor(segmentProgress); // Segment actif
       const segmentFraction = segmentProgress - currentSegment; // Progression relative dans le segment actuel
 
       // Limiter le segment pour rester dans la plage [0, segmentCount - 1]
       if (currentSegment >= segmentCount) return
-      console.log(segmentCount)
       // Positions de début et de fin pour le segment actif
-      const start = this.cameraSteps[currentSegment];
-      const end = this.cameraSteps[currentSegment + 1];
+      const start = this.cameraSteps[Math.abs(currentSegment)];
+      const end = this.cameraSteps[Math.abs(currentSegment) + 1];
+      console.log( start, end, Math.abs(currentSegment), segmentFraction)
 
       // Interpoler entre ces deux étapes
       this.camera.position.x = this.lerp(start.x, end.x, segmentFraction);

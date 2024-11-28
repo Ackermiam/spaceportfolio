@@ -1,5 +1,5 @@
 <template>
-  <section class="HomeThree">
+  <section class="HomeThree" ref="scene">
     <div
       ref="sceneThree"
       class="Scene"
@@ -19,6 +19,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { Logic } from "../three/sceneThree/scene";
 
 const sceneThree = ref();
+const scene = ref();
 const isSectionVisible = ref(false);
 let logic: Logic;
 
@@ -33,7 +34,7 @@ const checkVisibility = () => {
 };
 
 onMounted(() => {
-  logic = new Logic(sceneThree.value);
+  logic = new Logic(scene.value, sceneThree.value);
 
   window.addEventListener('scroll', checkVisibility);
   window.addEventListener('resize', checkVisibility);
