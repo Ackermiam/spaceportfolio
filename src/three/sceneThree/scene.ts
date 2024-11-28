@@ -23,11 +23,11 @@ export class Logic {
 
   constructor(ref: HTMLElement) {
     this.cameraSteps = [
-      { x: 0, y: 0.8, z: 0.7 },
-      { x: 0, y: 0.8, z: 0.7 },
+      { x: 0, y: 0.5, z: 0.7 },
+      { x: 0, y: 0.5, z: 0.7 },
       { x: 3, y: 2, z: -1 },
-      { x: 0, y: 20, z: 120 },
-      { x: 0, y: 0, z: 120 },
+      { x: 0, y: 0.5, z: 0.7 },
+      { x: 3, y: 2, z: -1 },
     ];
     this.scrollProgress = 0;
     const { width, height } = ref.getBoundingClientRect();
@@ -41,7 +41,7 @@ export class Logic {
       45,
       width / height
     );
-    this.camera.position.set(0, 0.8, 0.7);
+    this.camera.position.set(0, 0.5, 0.7);
     this.camera.lookAt(0, 1,0);
 
     this.renderer = new WebGLRenderer({ antialias: true });
@@ -124,7 +124,7 @@ export class Logic {
 
       // Limiter le segment pour rester dans la plage [0, segmentCount - 1]
       if (currentSegment >= segmentCount) return
-      console.log(this.height, scrollableHeight)
+      console.log(segmentCount)
       // Positions de début et de fin pour le segment actif
       const start = this.cameraSteps[currentSegment];
       const end = this.cameraSteps[currentSegment + 1];

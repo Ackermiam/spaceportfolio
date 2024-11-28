@@ -71,7 +71,7 @@ onUnmounted(() => {
   font-size: 8vw;
   padding: 1em;
   color: rgb(158, 99, 32);
-  z-index: 3;
+  z-index: 1;
   right: 0;
   top: 600px;
   text-align: right;
@@ -86,6 +86,7 @@ onUnmounted(() => {
 
 .Scene--fixed {
   position: fixed;
+  transition: top 0.3s ease-out;
 }
 
 .Scene--absolute {
