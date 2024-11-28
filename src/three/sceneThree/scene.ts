@@ -123,9 +123,7 @@ export class Logic {
       const segmentFraction = segmentProgress - currentSegment; // Progression relative dans le segment actuel
 
       // Limiter le segment pour rester dans la plage [0, segmentCount - 1]
-      if (currentSegment >= segmentCount) {
-        currentSegment = segmentCount - 1;
-      }
+      if (currentSegment >= segmentCount) return
       console.log(this.height, scrollableHeight)
       // Positions de début et de fin pour le segment actif
       const start = this.cameraSteps[currentSegment];
