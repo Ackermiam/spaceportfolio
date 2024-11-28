@@ -3,10 +3,11 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   Object3D,
-  DirectionalLight
+  DirectionalLight,
+  AmbientLight
 } from "three";
 
-import { BlackHole } from "../models/hole.ts";
+import { Machine } from "../models/machine.ts";
 
 export class Logic {
   scene: Scene;
@@ -17,18 +18,21 @@ export class Logic {
   mouseYPos: number;
   scrollProgress: number;
   height: number;
+  ref: HTMLElement;
   cameraSteps: { x: number; y: number; z: number }[];
 
   constructor(ref: HTMLElement) {
     this.cameraSteps = [
-      { x: 14, y: 5, z: 0 },
-      { x: 0, y: 1, z: 5 },
-      { x: -15, y: 1, z: 10 },
-      { x: -5, y: -20, z: 5 }
+      { x: 0, y: 0.8, z: 0.7 },
+      { x: 0, y: 0.8, z: 0.7 },
+      { x: 3, y: 2, z: -1 },
+      { x: 0, y: 20, z: 120 },
+      { x: 0, y: 0, z: 120 },
     ];
     this.scrollProgress = 0;
     const { width, height } = ref.getBoundingClientRect();
     this.height = height;
+    this.ref = ref;
     this.meshs = [];
     this.scene = new Scene();
     this.mouseXPos = 0;
@@ -37,9 +41,8 @@ export class Logic {
       45,
       width / height
     );
-    this.camera.position.set(14, 5, 0);
-    this.camera.lookAt(0, 3, 0);
-
+    this.camera.position.set(0, 0.8, 0.7);
+    this.camera.lookAt(0, 1,0);
 
     this.renderer = new WebGLRenderer({ antialias: true });
     this.renderer.setClearColor(0, 0);
@@ -47,29 +50,26 @@ export class Logic {
     const resizeCanvas = window.devicePixelRatio > 1;
     this.renderer.setSize(width , height, resizeCanvas);
 
-    const directionalLight = new DirectionalLight(0xff0000, 3);
-    directionalLight.position.set(0, 1, -5).normalize();
+    const directionalLight = new DirectionalLight(0xffffff, 8);
+    directionalLight.position.set(1, 1, 2).normalize();
     this.scene.add(directionalLight);
+    const light = new AmbientLight( 0x404040, 30 );
+    this.scene.add( light );
 
     ref.appendChild(this.renderer.domElement);
 
-    const eventLoading = new CustomEvent("loading", {
-      detail: false,
-    });
+    const machine = new Machine(width);
 
-    const blackHole = new BlackHole(width);
-
-    const loadBlackHole = async () => {
-      await blackHole.loadMesh();
-      this.meshs.push(blackHole);
+    const loadMachine = async () => {
+      await machine.loadMesh();
+      this.meshs.push(machine);
       this.addChildren();
       this.setView();
       this.registerEventListeners();
-      window.dispatchEvent(eventLoading);
       this.tick();
     };
 
-    loadBlackHole();
+    loadMachine();
   }
 
   tick() {
@@ -89,7 +89,7 @@ export class Logic {
 
   tickChildren() {
     for (let i = 0; i < this.meshs.length; i++) {
-      this.meshs[i].tick(this.mouseYPos);
+      this.meshs[i].tick();
     }
   }
 
@@ -99,27 +99,34 @@ export class Logic {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
+  isSectionVisible(): boolean {
+    if (!this.ref) return false;
+    const top = this.ref.getBoundingClientRect().top
+
+    return top <= 0;
+  }
+
   registerEventListeners() {
     window.onresize = () => {
       this.setView();
     };
-    window.addEventListener("mousemove", (e) => {
-      this.mouseXPos = e.clientX;
-      this.mouseYPos = e.clientY;
-    });
 
     window.addEventListener("scroll", () => {
-      const scrollableHeight = (this.height * 4) - window.innerHeight;
+      if (!this.isSectionVisible()) return;
+
+      const scrollableHeight = (this.height * 5) - window.innerHeight;
       this.scrollProgress = window.scrollY / scrollableHeight;
 
       const segmentCount = this.cameraSteps.length - 1;
       const segmentProgress = this.scrollProgress * segmentCount; // Progression totale multipliée par les segments
-      const currentSegment = Math.floor(segmentProgress); // Segment actif
+      let currentSegment = Math.floor(segmentProgress); // Segment actif
       const segmentFraction = segmentProgress - currentSegment; // Progression relative dans le segment actuel
 
       // Limiter le segment pour rester dans la plage [0, segmentCount - 1]
-      if (currentSegment >= segmentCount) return;
-
+      if (currentSegment >= segmentCount) {
+        currentSegment = segmentCount - 1;
+      }
+      console.log(this.height, scrollableHeight)
       // Positions de début et de fin pour le segment actif
       const start = this.cameraSteps[currentSegment];
       const end = this.cameraSteps[currentSegment + 1];
@@ -129,8 +136,8 @@ export class Logic {
       this.camera.position.y = this.lerp(start.y, end.y, segmentFraction);
       this.camera.position.z = this.lerp(start.z, end.z, segmentFraction);
 
-      this.camera.lookAt(0, 3, 0);
-    })
+      this.camera.lookAt(0, 1, 0);
+    });
   }
 
   lerp(start: number, end: number, alpha: number): number {

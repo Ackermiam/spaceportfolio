@@ -6,28 +6,27 @@ import {
 } from "three";
 
 export class Cubes {
-  mesh: Object3D[];
-  mousePosX: number;
+  mesh: Object3D;
 
   constructor() {
+    this.mesh = new Object3D;
 
-    this.mesh = [];
-    this.mousePosX = 0;
-
-    const geometry = new BoxGeometry(0.4, 0.4, 0.4);
+    const geometry = new BoxGeometry(0.5, 0.5, 0.5);
     const material = new MeshPhongMaterial({
       color: 0xff8ff4,
       shininess: 70,
       specular: 0xffabf7,
     });
 
-    for (let i = -40; i < 40; i += 0.7) {
-      for (let j = -1; j < 1; j += 0.7) {
+    for (let i = -20; i < 20; i += 0.8) {
+      for (let j = -2; j < 2; j += 0.8) {
         const cube = new Mesh(geometry, material);
-        cube.position.set(i, j, i / 2);
-        this.mesh.push(cube);
+        cube.position.set(i, j, i + 1.2);
+        this.mesh.add(cube);
       }
     }
+
+    this.mesh.rotateX(4)
 
     window.addEventListener("scroll", () => {
       this.moveOnScroll();
@@ -37,24 +36,12 @@ export class Cubes {
   }
 
   tick() {
-    this.move();
-
-    requestAnimationFrame(() => {
-      this.tick();
-    });
-  }
-
-  move() {
-    this.mesh.forEach((e) => {
-      e.rotateY(0.005);
-
-    });
   }
 
   moveOnScroll() {
-    this.mesh.forEach((e) => {
-      e.rotateY(Math.random() * (0.05 - 0.01) + 0.01);
-      e.rotateX(Math.random() * (0.05 - 0.01) + 0.01);
+    this.mesh.children.forEach((e) => {
+      e.rotateY(Math.random() * (0.05 - 0.01) + 0.009);
+      e.rotateX(Math.random() * (0.05 - 0.01) + 0.009);
     });
   }
 }

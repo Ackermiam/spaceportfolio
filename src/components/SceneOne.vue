@@ -1,15 +1,43 @@
 <template>
-  <SceneOne />
-  <SceneTwo />
-  <SceneThree />
-  <SceneFour />
+  <section class="Home">
+    <div ref="scene" class="Scene"></div>
+
+    <div class="Title">
+      <h1
+        v-for="(_, index) in 5"
+        :key="index"
+        :style="{ opacity: `${1 - index / 5}` }"
+        class="Title__text"
+      >
+        Acker'Prod
+      </h1>
+    </div>
+
+    <div class="Developer">
+      <h1 class="Developer__title">
+        French <br />
+        Developer
+      </h1>
+    </div>
+    <div class="Developer__clone">
+      <h1 class="Developer__title__clone">
+        French <br />
+        Developer
+      </h1>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import SceneOne from "./components/SceneOne.vue"
-import SceneTwo from "./components/SceneTwo.vue"
-import SceneThree from "./components/SceneThree.vue"
-import SceneFour from "./components/SceneFour.vue"
+import { ref, onMounted } from "vue";
+import { Logic } from "../three/sceneOne/scene";
+
+const scene = ref();
+let logic;
+
+onMounted(() => {
+  logic = new Logic(scene.value);
+});
 </script>
 
 <style scoped>
@@ -18,6 +46,7 @@ import SceneFour from "./components/SceneFour.vue"
   height: 300vh;
   position: relative;
   z-index: 1;
+  overflow-x: hidden;
 }
 
 .Scene {
@@ -86,12 +115,12 @@ h1, h2 {
   }
 
   .Developer {
-    top: 1200px;
+    top: 1300px;
     font-size: 10vw !important;
   }
 
   .Developer__clone {
-    top: 1200px;
+    top: 1300px;
     font-size: 12vw !important;
   }
 }
