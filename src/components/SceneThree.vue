@@ -51,7 +51,7 @@ onUnmounted(() => {
 <style scoped>
 .HomeThree {
   width: 100vw;
-  height: 500vh;
+  height: 1000vh;
   background: rgb(126, 78, 24);
   position: relative;
   z-index: 3;
@@ -72,9 +72,9 @@ onUnmounted(() => {
   font-size: 8vw;
   padding: 1em;
   color: rgb(158, 99, 32);
-  z-index: 1;
+  z-index: 3;
   right: 0;
-  top: 600px;
+  top: 65vh;
   text-align: right;
 }
 
