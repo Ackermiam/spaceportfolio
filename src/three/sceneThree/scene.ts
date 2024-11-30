@@ -23,9 +23,10 @@ export class Logic {
 
   constructor(ref: HTMLElement, refToAppend: HTMLElement) {
     this.cameraSteps = [
-      { x: 0, y: 0.5, z: 0.2 },
-      { x: 1, y: 1, z: -1 },
-      { x: 0.5, y: 1, z: -2 },
+      { x: 0, y: 1.62, z: 0 },
+      { x: 0, y: 1, z: 0.5 },
+      { x: 0.5, y: 0.5, z: 0.2 },
+      { x: 1, y: 1.2, z: 0.5 },
       { x: 1, y: 2, z: 0 },
       { x: 0, y: 0.5, z: 0.7 },
       { x: -0.2, y: 1.1, z: 0 },
@@ -42,7 +43,7 @@ export class Logic {
       45,
       width / height
     );
-    this.camera.position.set(0, 0.5, 0.2);
+    this.camera.position.set(0, 1.62, 0);
     this.camera.lookAt(0, 1,0);
 
     this.renderer = new WebGLRenderer({ antialias: true });

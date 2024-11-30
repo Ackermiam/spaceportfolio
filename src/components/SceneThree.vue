@@ -21,7 +21,12 @@
       <p>
         Développeur travaillant essentiellement avec Vue.js et Nuxt.js, je
         conçois des solutions sur mesure pour répondre aux besoins de mon client
-        <em>Nespresso</em> sur leur site e-commerce. Mon travail se concentre
+        <em>Nespresso</em> sur leur site e-commerce.
+      </p>
+    </div>
+    <div class="HomeThree__presentationOne">
+      <p>
+        Mon travail se concentre
         sur la création de pages impactantes pour les lancements de produits
         <em>(Vertuo Pop)</em>, la conception de pages événementielles pour des
         campagnes telles que <em>Black Friday 2022 & 2023</em>, la nouvelle
@@ -42,7 +47,7 @@
     </div>
 
     <div class="HomeThree__presentationThree">
-      <img src=""/>
+      <img src="" />
     </div>
   </section>
 </template>
@@ -83,7 +88,26 @@ onUnmounted(() => {
 .HomeThree {
   width: 100vw;
   height: 1000vh;
-  background: rgb(126, 78, 24);
+  background-color:hsla(25,56%,15%,1);
+background-image:
+radial-gradient(at 7% 91%, hsla(0,40%,11%,1) 0px, transparent 50%),
+radial-gradient(at 25% 3%, hsla(18,52%,14%,1) 0px, transparent 50%),
+radial-gradient(at 62% 91%, hsla(6,50%,12%,1) 0px, transparent 50%),
+radial-gradient(at 5% 23%, hsla(15,55%,14%,1) 0px, transparent 50%),
+radial-gradient(at 77% 52%, hsla(21,50%,19%,1) 0px, transparent 50%),
+radial-gradient(at 66% 61%, hsla(18,79%,19%,1) 0px, transparent 50%),
+radial-gradient(at 39% 86%, hsla(14,47%,21%,1) 0px, transparent 50%),
+radial-gradient(at 91% 58%, hsla(30,65%,15%,1) 0px, transparent 50%),
+radial-gradient(at 12% 55%, hsla(27,46%,20%,1) 0px, transparent 50%),
+radial-gradient(at 39% 55%, hsla(27,100%,16%,1) 0px, transparent 50%),
+radial-gradient(at 83% 92%, hsla(21,53%,15%,1) 0px, transparent 50%),
+radial-gradient(at 89% 20%, hsla(15,49%,23%,1) 0px, transparent 50%),
+radial-gradient(at 44% 36%, hsla(15,48%,28%,1) 0px, transparent 50%),
+radial-gradient(at 74% 29%, hsla(18,77%,29%,1) 0px, transparent 50%),
+radial-gradient(at 61% 10%, hsla(24,68%,15%,1) 0px, transparent 50%),
+radial-gradient(at 16% 32%, hsla(19,33%,22%,1) 0px, transparent 50%),
+radial-gradient(at 26% 50%, hsla(22,59%,19%,1) 0px, transparent 50%),
+radial-gradient(at 31% 14%, hsla(18,79%,18%,1) 0px, transparent 50%);
   position: relative;
   z-index: 3;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0px -7px 20px rgba(0, 0, 0, 0.22);
@@ -93,6 +117,7 @@ onUnmounted(() => {
 .HomeThree__title,
 .HomeThree__nespresso,
 .HomeThree__presentation,
+.HomeThree__presentationOne,
 .HomeThree__presentationTwo {
   position: absolute;
   padding: 10em;
@@ -103,20 +128,28 @@ onUnmounted(() => {
   z-index: 3;
 }
 
+.HomeThree__nespresso h2 {
+  filter: drop-shadow(0 0 10px #00000021);
+}
 
 .HomeThree__presentation,
+.HomeThree__presentationOne,
 .HomeThree__presentationTwo {
-  z-index: 1;
+  z-index: 3;
 }
 
 .HomeThree__presentation {
-  top: 150vh;
+  top: 200vh;
+}
+
+.HomeThree__presentationOne {
+  top: 275vh;
+  text-align: right;
+  right: 0;
 }
 
 .HomeThree__presentationTwo {
-  top: 250vh;
-  text-align: right;
-  right: 0;
+  top: 400vh;
 }
 
 .HomeThree__presentationThree {
@@ -124,7 +157,7 @@ onUnmounted(() => {
 }
 
 .HomeThree__title {
-  color: rgb(92, 57, 18);
+  color: rgb(158, 99, 32);
 }
 
 .HomeThree__nespresso {
@@ -155,16 +188,21 @@ h2 {
   line-height: 0.8em;
   margin: 0;
   font-size: 14vw;
-  filter: drop-shadow(0 0 10px #00000021);
 }
 
 p {
-  font-size: 1.8vw;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  font-size: 2vw;
   max-width: 500px;
   font-family: "Archivo";
   padding: 1em;
-  color: rgb(77, 50, 19);
-  border-top: 4px solid rgb(77, 50, 19);
+  color: rgb(202, 202, 202);
 }
 
 em {
@@ -192,8 +230,8 @@ em {
   }
 
   .HomeThree__presentation,
-.HomeThree__presentationTwo {
-  z-index: 3;
-}
+  .HomeThree__presentationTwo {
+    z-index: 3;
+  }
 }
 </style>
