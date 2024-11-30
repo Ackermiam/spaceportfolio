@@ -29,14 +29,7 @@ export class Machine {
     this.mesh.position.y = 1;
 
     if(this.width < 900) {
-      this.mesh.scale.set(2, 2, 2);
-      this.mesh.position.y = 1.5;
-    }
-
-    if (gltf.animations.length > 0) {
-      this.mixer = new AnimationMixer(this.mesh);
-      const action = this.mixer.clipAction(gltf.animations[0]);
-      action.play();
+      this.mesh.scale.set(27, 27, 27);
     }
   }
 }
