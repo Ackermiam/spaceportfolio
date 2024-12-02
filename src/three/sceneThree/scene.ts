@@ -142,7 +142,6 @@ export class Logic {
   }
 
   lerp(start: number, end: number, alpha: number): number {
-    //const progress = (scrollY - sectionTop) / sectionHeight
     return start + (end - start) * alpha;
   }
 }
