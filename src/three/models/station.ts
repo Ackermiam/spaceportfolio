@@ -1,7 +1,7 @@
 import { Object3D, AnimationMixer, Clock } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-export class Bluehole {
+export class Station {
   mesh: Object3D;
   loader: GLTFLoader;
   clock = new Clock();

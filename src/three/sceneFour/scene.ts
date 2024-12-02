@@ -7,7 +7,7 @@ import {
   AmbientLight
 } from "three";
 
-import { Bluehole } from "../models/bluehole.ts";
+import { Station } from "../models/station.ts";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export class Logic {
@@ -33,7 +33,7 @@ export class Logic {
       width / height
     );
     this.camera.position.set(23, -3, -3);
-    this.camera.lookAt(0, -4, 11.5)
+    this.camera.lookAt(-5, -4, 11.5)
 
     this.renderer = new WebGLRenderer({ antialias: true });
     this.renderer.setClearColor(0, 0);
@@ -41,14 +41,14 @@ export class Logic {
     const resizeCanvas = window.devicePixelRatio > 1;
     this.renderer.setSize(width , height, resizeCanvas);
 
-    const directionalLight = new DirectionalLight(0xccaaaa, 5);
+    const directionalLight = new DirectionalLight(0xaaccaa, 5);
     directionalLight.position.set(1, 1, 1).normalize();
     this.scene.add(directionalLight);
-    const directionalTwoLight = new DirectionalLight(0x0000ff, 5);
+    const directionalTwoLight = new DirectionalLight(0xff0000, 5);
     directionalTwoLight.position.set(5, 1, 1).normalize();
     this.scene.add(directionalTwoLight);
-    /*const directionalThreeLight = new DirectionalLight(0xffffff, 1);
-    directionalThreeLight.position.set(5, 1, 1).normalize();*/
+    const directionalThreeLight = new DirectionalLight(0xffffff, 10);
+    directionalThreeLight.position.set(5, 1, 1).normalize();
     //this.scene.add(directionalThreeLight);
 
     //const controls = new OrbitControls( this.camera, this.renderer.domElement );
@@ -56,11 +56,11 @@ export class Logic {
 
     refToAppend.appendChild(this.renderer.domElement);
 
-    const bluehole = new Bluehole(width);
+    const station = new Station(width);
 
-    const loadBlueHole = async () => {
-      await bluehole.loadMesh();
-      this.meshs.push(bluehole);
+    const loadStation = async () => {
+      await station.loadMesh();
+      this.meshs.push(station);
       this.addChildren();
       this.setView();
       this.registerEventListeners();
@@ -71,7 +71,7 @@ export class Logic {
       console.log('cam pos', this.camera.position, 'controls', controls.target)
     })*/
 
-    loadBlueHole();
+    loadStation();
   }
 
   tick() {

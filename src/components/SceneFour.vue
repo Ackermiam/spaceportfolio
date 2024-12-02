@@ -46,21 +46,22 @@ onUnmounted(() => {
 .HomeFour {
   width: 100vw;
   height: 400vh;
-  background: rgb(8, 8, 8);
+  background: rgb(0, 0, 0);
   position: relative;
   z-index: 3;
 }
 
 .HomeFour__presentation {
   font-family: "Mewatonia";
-  font-size: 15vw;
-  padding: .5em;
-  color: rgb(131, 10, 10);
+  font-size: 10vw;
+  padding: 1em;
+  color: rgba(255, 255, 255, 0.534);
+  filter: drop-shadow(-8px 5px 0px rgb(204, 38, 38))
 }
 
 h2 {
-  font-family: "Mewatonia";
-  line-height: 0.8em;
+  font-family: "Play";
+  line-height: 1em;
   margin: 0;
 }
 
