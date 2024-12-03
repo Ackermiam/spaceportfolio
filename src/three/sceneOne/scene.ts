@@ -52,7 +52,7 @@ export class Logic {
 
     this.renderer = new WebGLRenderer({
       antialias: width > 900,
-      powerPreference: "high-performance",
+      powerPreference: 'low-power',
     });
 
     this.renderer.setClearColor(0, 0);
