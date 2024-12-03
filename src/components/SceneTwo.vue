@@ -17,7 +17,7 @@ import { Logic } from "../three/sceneTwo/scene";
 
 const sceneTwo = ref();
 const presentationRef = ref<HTMLElement | null>(null);
-let logic;
+let logic: Logic | null = null;
 
 const presentationOpacity = ref(0);
 
@@ -43,13 +43,12 @@ const handleScroll = () => {
 onMounted(() => {
   logic = new Logic(sceneTwo.value);
 
-  window.addEventListener('scroll', handleScroll);
-
+  window.addEventListener("scroll", handleScroll);
   handleScroll();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 

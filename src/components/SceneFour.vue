@@ -3,6 +3,7 @@
     <div
       ref="sceneFour"
       class="Scene"
+      :class="isSectionVisible ? 'Scene--fixed' : 'Scene--absolute'"
     ></div>
     <div class="HomeFour__presentation">
       <h2>Mes <br> Projets</h2>
@@ -53,13 +54,13 @@ onUnmounted(() => {
 
 .HomeFour__presentation {
   font-family: "Mewatonia";
-  font-size: 10vw;
-  padding: 1em;
-  color: rgba(255, 255, 255, 0.534);
-  filter: drop-shadow(-8px 5px 0px rgb(204, 38, 38))
+  color: rgba(185, 253, 255, 0.514);
+  filter: drop-shadow(-8px 5px 0px rgb(252, 47, 47))
 }
 
 h2 {
+  padding: 0.8em;
+  font-size: 13vw;
   font-family: "Play";
   line-height: 1em;
   margin: 0;
@@ -80,5 +81,11 @@ h2 {
 
 .Scene--absolute {
   position: absolute;
+}
+
+@media (max-width: 900px) {
+  h2 {
+    font-size: 14vw;
+  }
 }
 </style>

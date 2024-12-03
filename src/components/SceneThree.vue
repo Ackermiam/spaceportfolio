@@ -88,7 +88,7 @@ import { Logic } from "../three/sceneThree/scene";
 const sceneThree = ref();
 const scene = ref();
 const isSectionVisible = ref(false);
-let logic: Logic;
+let logic: Logic | null = null;
 
 const checkVisibility = () => {
   if (!sceneThree.value) return;

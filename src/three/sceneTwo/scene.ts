@@ -3,7 +3,7 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   Object3D,
-  DirectionalLight
+  DirectionalLight,
 } from "three";
 
 import { Cubes } from "../models/cubes.ts";
@@ -13,22 +13,31 @@ export class Logic {
   renderer: WebGLRenderer;
   camera: PerspectiveCamera;
   meshs: any[];
+  ref: HTMLElement;
+  pixelRatio: number;
 
   constructor(ref: HTMLElement) {
-    const { width, height } = ref.getBoundingClientRect();
+    const { width } = ref.getBoundingClientRect();
     this.meshs = [];
+    this.ref = ref;
     this.scene = new Scene();
-    this.camera = new PerspectiveCamera(
-      45,
-      width / window.innerHeight * 2
-    );
+    this.camera = new PerspectiveCamera(45, (width / window.innerHeight) * 2);
     this.camera.position.set(0, 0, 15);
 
-    this.renderer = new WebGLRenderer({ antialias: true });
+    this.pixelRatio =
+      width < 900
+        ? Math.min(window.devicePixelRatio, 1.5)
+        : window.devicePixelRatio;
+
+    this.renderer = new WebGLRenderer({
+      antialias: width > 900,
+      powerPreference: "high-performance",
+    });
+
     this.renderer.setClearColor(0, 0);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setPixelRatio(this.pixelRatio);
     const resizeCanvas = window.devicePixelRatio > 1;
-    this.renderer.setSize(width , window.innerHeight * 2, resizeCanvas);
+    this.renderer.setSize(width, window.innerHeight * 2, resizeCanvas);
 
     const directionalLight = new DirectionalLight(0xffffff, 3);
     directionalLight.position.set(0, 1, 1).normalize();
@@ -41,18 +50,20 @@ export class Logic {
 
     this.addChildren();
 
-    if(width < 900) {
+    if (width < 900) {
       this.camera.position.set(0, 3, 18);
-      this.meshs[0].mesh.rotateX(2)
+      this.meshs[0].mesh.rotateX(2);
     }
     this.setView();
     this.registerEventListeners();
+    this.renderer.render(this.scene, this.camera);
 
     this.tick();
   }
 
   tick() {
     this.renderer.render(this.scene, this.camera);
+
     this.tickChildren();
 
     requestAnimationFrame(() => {
@@ -83,5 +94,4 @@ export class Logic {
       this.setView();
     };
   }
-
 }

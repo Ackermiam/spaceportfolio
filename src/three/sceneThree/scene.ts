@@ -20,6 +20,8 @@ export class Logic {
   height: number;
   ref: HTMLElement;
   cameraSteps: { x: number; y: number; z: number }[];
+  segmentProgress: number;
+  pixelRatio: number;
 
   constructor(ref: HTMLElement, refToAppend: HTMLElement) {
     this.cameraSteps = [
@@ -32,6 +34,7 @@ export class Logic {
       { x: -0.2, y: 1.1, z: 0 },
     ];
     this.scrollProgress = 0;
+    this.segmentProgress = 0;
     const { width, height } = ref.getBoundingClientRect();
     this.height = height;
     this.ref = ref;
@@ -46,9 +49,18 @@ export class Logic {
     this.camera.position.set(0, 1.62, 0);
     this.camera.lookAt(0, 1,0);
 
-    this.renderer = new WebGLRenderer({ antialias: true });
+    this.pixelRatio =
+    width < 900
+      ? Math.min(window.devicePixelRatio, 1.5)
+      : window.devicePixelRatio;
+
+    this.renderer = new WebGLRenderer({
+      antialias: width > 900,
+      powerPreference: "high-performance",
+    });
+
     this.renderer.setClearColor(0, 0);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setPixelRatio(this.pixelRatio);
     const resizeCanvas = window.devicePixelRatio > 1;
     this.renderer.setSize(width , height, resizeCanvas);
 
@@ -77,6 +89,7 @@ export class Logic {
   tick() {
     this.renderer.render(this.scene, this.camera);
     this.tickChildren();
+    this.moveMachine();
 
     requestAnimationFrame(() => {
       this.tick();
@@ -120,25 +133,27 @@ export class Logic {
       const sectionHeight = this.ref.offsetHeight
       const progress = distanceFromTop / sectionHeight
 
-      const segmentCount = this.cameraSteps.length - 1;
-      const segmentProgress = progress * segmentCount; // Progression totale multipliée par les segments
-      const currentSegment = Math.floor(segmentProgress); // Segment actif
-      const segmentFraction = segmentProgress - currentSegment; // Progression relative dans le segment actuel
-
-      // Limiter le segment pour rester dans la plage [0, segmentCount - 1]
-      if (currentSegment >= segmentCount) return
-      // Positions de début et de fin pour le segment actif
-
-      const start = this.cameraSteps[Math.abs(currentSegment)];
-      const end = this.cameraSteps[Math.abs(currentSegment) + 1];
-
-      // Interpoler entre ces deux étapes
-      this.camera.position.x = this.lerp(start.x, end.x, segmentFraction);
-      this.camera.position.y = this.lerp(start.y, end.y, segmentFraction);
-      this.camera.position.z = this.lerp(start.z, end.z, segmentFraction);
-
-      this.camera.lookAt(0, 1, 0);
+      this.segmentProgress = progress * (this.cameraSteps.length - 1);
     });
+  }
+
+  moveMachine() {
+    const currentSegment = Math.floor(this.segmentProgress); // Segment actif
+    const segmentFraction = this.segmentProgress - currentSegment; // Progression relative dans le segment actuel
+
+    // Limiter le segment pour rester dans la plage [0, this.cameraSteps.length - 1 - 1]
+    if (currentSegment >= (this.cameraSteps.length - 1)) return
+    // Positions de début et de fin pour le segment actif
+
+    const start = this.cameraSteps[Math.abs(currentSegment)];
+    const end = this.cameraSteps[Math.abs(currentSegment) + 1];
+
+    // Interpoler entre ces deux étapes
+    this.camera.position.x = this.lerp(start.x, end.x, segmentFraction);
+    this.camera.position.y = this.lerp(start.y, end.y, segmentFraction);
+    this.camera.position.z = this.lerp(start.z, end.z, segmentFraction);
+
+    this.camera.lookAt(0, 1, 0);
   }
 
   lerp(start: number, end: number, alpha: number): number {

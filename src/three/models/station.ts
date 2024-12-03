@@ -1,12 +1,10 @@
-import { Object3D, AnimationMixer, Clock } from "three";
+import { Object3D } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 export class Station {
   mesh: Object3D;
   loader: GLTFLoader;
-  clock = new Clock();
   animation: any;
-  mixer: AnimationMixer | null = null;
   width: number;
 
   constructor(width: number) {
@@ -26,10 +24,11 @@ export class Station {
     this.mesh = gltf.scene;
     this.animation = gltf.animations;
     this.mesh.scale.set(1, 1, 1);
-    this.mesh.rotateX(0.5)
+    this.mesh.rotateX(0.8)
 
     if(this.width < 900) {
-      this.mesh.scale.set(1, 1, 1);
+      this.mesh.position.x = 6;
+      this.mesh.position.y = -3;
     }
   }
 

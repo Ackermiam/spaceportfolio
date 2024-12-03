@@ -3,12 +3,10 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   Object3D,
-  DirectionalLight,
-  AmbientLight
+  DirectionalLight
 } from "three";
 
 import { Station } from "../models/station.ts";
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export class Logic {
   scene: Scene;
@@ -19,6 +17,7 @@ export class Logic {
   mouseYPos: number;
   height: number;
   ref: HTMLElement;
+  pixelRatio: number;
 
   constructor(ref: HTMLElement, refToAppend: HTMLElement) {
     const { width, height } = ref.getBoundingClientRect();
@@ -35,9 +34,17 @@ export class Logic {
     this.camera.position.set(23, -3, -3);
     this.camera.lookAt(-5, -4, 11.5)
 
-    this.renderer = new WebGLRenderer({ antialias: true });
+    this.pixelRatio =
+    width < 900
+      ? Math.min(window.devicePixelRatio, 1.5)
+      : window.devicePixelRatio;
+
+    this.renderer = new WebGLRenderer({
+      antialias: width > 900,
+      powerPreference: "high-performance",
+    });
     this.renderer.setClearColor(0, 0);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setPixelRatio(this.pixelRatio);
     const resizeCanvas = window.devicePixelRatio > 1;
     this.renderer.setSize(width , height, resizeCanvas);
 
@@ -49,10 +56,6 @@ export class Logic {
     this.scene.add(directionalTwoLight);
     const directionalThreeLight = new DirectionalLight(0xffffff, 10);
     directionalThreeLight.position.set(5, 1, 1).normalize();
-    //this.scene.add(directionalThreeLight);
-
-    //const controls = new OrbitControls( this.camera, this.renderer.domElement );
-    //controls.update();
 
     refToAppend.appendChild(this.renderer.domElement);
 
@@ -66,10 +69,6 @@ export class Logic {
       this.registerEventListeners();
       this.tick();
     };
-
-    /*window.addEventListener('mousemove', () => {
-      console.log('cam pos', this.camera.position, 'controls', controls.target)
-    })*/
 
     loadStation();
   }
