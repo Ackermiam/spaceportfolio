@@ -15,6 +15,8 @@ export class Logic {
   meshs: any[];
   ref: HTMLElement;
   pixelRatio: number;
+  private observer: IntersectionObserver | null = null;
+  private animationFrameId: number | null = null;
 
   constructor(ref: HTMLElement) {
     const { width } = ref.getBoundingClientRect();
@@ -57,7 +59,7 @@ export class Logic {
     this.setView();
     this.registerEventListeners();
     this.renderer.render(this.scene, this.camera);
-
+    this.setupIntersectionObserver();
     this.tick();
   }
 
@@ -66,9 +68,39 @@ export class Logic {
 
     this.tickChildren();
 
-    requestAnimationFrame(() => {
+    this.animationFrameId = requestAnimationFrame(() => {
       this.tick();
     });
+  }
+
+  setupIntersectionObserver() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.startAnimation();
+          } else {
+            this.stopAnimation();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    this.observer.observe(this.ref);
+  }
+
+  startAnimation() {
+    if (this.animationFrameId === null) {
+      this.tick();
+    }
+  }
+
+  stopAnimation() {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
   }
 
   addChildren() {

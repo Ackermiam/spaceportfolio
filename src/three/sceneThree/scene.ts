@@ -22,6 +22,8 @@ export class Logic {
   cameraSteps: { x: number; y: number; z: number }[];
   segmentProgress: number;
   pixelRatio: number;
+  private observer: IntersectionObserver | null = null;
+  private animationFrameId: number | null = null;
 
   constructor(ref: HTMLElement, refToAppend: HTMLElement) {
     this.cameraSteps = [
@@ -80,6 +82,7 @@ export class Logic {
       this.addChildren();
       this.setView();
       this.registerEventListeners();
+      this.setupIntersectionObserver();
       this.tick();
     };
 
@@ -91,9 +94,39 @@ export class Logic {
     this.tickChildren();
     this.moveMachine();
 
-    requestAnimationFrame(() => {
+    this.animationFrameId = requestAnimationFrame(() => {
       this.tick();
     });
+  }
+
+  setupIntersectionObserver() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.startAnimation();
+          } else {
+            this.stopAnimation();
+          }
+        });
+      },
+      { threshold: 0.02 }
+    );
+
+    this.observer.observe(this.ref);
+  }
+
+  startAnimation() {
+    if (this.animationFrameId === null) {
+      this.tick();
+    }
+  }
+
+  stopAnimation() {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
   }
 
   addChildren() {

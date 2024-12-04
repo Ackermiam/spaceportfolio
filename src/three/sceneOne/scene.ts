@@ -21,6 +21,8 @@ export class Logic {
   cameraSteps: { x: number; y: number; z: number }[];
   segmentProgress: number;
   pixelRatio: number;
+  private observer: IntersectionObserver | null = null;
+  private animationFrameId: number | null = null;
 
   constructor(ref: HTMLElement) {
     this.cameraSteps = [
@@ -66,10 +68,6 @@ export class Logic {
 
     ref.appendChild(this.renderer.domElement);
 
-    const eventLoading = new CustomEvent("loading", {
-      detail: false,
-    });
-
     const blackHole = new BlackHole(width);
 
     const loadBlackHole = async () => {
@@ -78,7 +76,7 @@ export class Logic {
       this.addChildren();
       this.setView();
       this.registerEventListeners();
-      window.dispatchEvent(eventLoading);
+      this.setupIntersectionObserver();
       this.tick();
     };
 
@@ -90,9 +88,39 @@ export class Logic {
     this.tickChildren();
     this.scrollHole();
 
-    requestAnimationFrame(() => {
+    this.animationFrameId = requestAnimationFrame(() => {
       this.tick();
     });
+  }
+
+  setupIntersectionObserver() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.startAnimation();
+          } else {
+            this.stopAnimation();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    this.observer.observe(this.ref);
+  }
+
+  startAnimation() {
+    if (this.animationFrameId === null) {
+      this.tick();
+    }
+  }
+
+  stopAnimation() {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
   }
 
   addChildren() {
