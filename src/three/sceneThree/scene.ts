@@ -4,7 +4,7 @@ import {
   PerspectiveCamera,
   Object3D,
   DirectionalLight,
-  AmbientLight
+  AmbientLight,
 } from "three";
 
 import { Machine } from "../models/machine.ts";
@@ -44,33 +44,30 @@ export class Logic {
     this.scene = new Scene();
     this.mouseXPos = 0;
     this.mouseYPos = 0;
-    this.camera = new PerspectiveCamera(
-      45,
-      width / height
-    );
+    this.camera = new PerspectiveCamera(45, width / height);
     this.camera.position.set(0, 1.62, 0);
-    this.camera.lookAt(0, 1,0);
+    this.camera.lookAt(0, 1, 0);
 
     this.pixelRatio =
-    width < 900
-      ? Math.min(window.devicePixelRatio, 1.5)
-      : window.devicePixelRatio;
+      width < 900
+        ? Math.min(window.devicePixelRatio, 1.5)
+        : window.devicePixelRatio;
 
     this.renderer = new WebGLRenderer({
       antialias: width > 900,
-      powerPreference: 'low-power',
+      powerPreference: "low-power",
     });
 
     this.renderer.setClearColor(0, 0);
     this.renderer.setPixelRatio(this.pixelRatio);
     const resizeCanvas = window.devicePixelRatio > 1;
-    this.renderer.setSize(width , height, resizeCanvas);
+    this.renderer.setSize(width, height, resizeCanvas);
 
     const directionalLight = new DirectionalLight(0xffffff, 8);
     directionalLight.position.set(1, 1, 2).normalize();
     this.scene.add(directionalLight);
-    const light = new AmbientLight( 0x404040, 30 );
-    this.scene.add( light );
+    const light = new AmbientLight(0x404040, 30);
+    this.scene.add(light);
 
     refToAppend.appendChild(this.renderer.domElement);
 
@@ -102,7 +99,7 @@ export class Logic {
   setupIntersectionObserver() {
     this.observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             this.startAnimation();
           } else {
@@ -149,7 +146,7 @@ export class Logic {
 
   isSectionVisible(): boolean {
     if (!this.ref) return false;
-    const top = this.ref.getBoundingClientRect().top
+    const top = this.ref.getBoundingClientRect().top;
 
     return top <= 0;
   }
@@ -162,9 +159,9 @@ export class Logic {
     window.addEventListener("scroll", () => {
       if (!this.isSectionVisible()) return;
 
-      const distanceFromTop = window.scrollY - this.ref.offsetTop
-      const sectionHeight = this.ref.offsetHeight
-      const progress = distanceFromTop / sectionHeight
+      const distanceFromTop = window.scrollY - this.ref.offsetTop;
+      const sectionHeight = this.ref.offsetHeight;
+      const progress = distanceFromTop / sectionHeight;
 
       this.segmentProgress = progress * (this.cameraSteps.length - 1);
     });
@@ -175,7 +172,7 @@ export class Logic {
     const segmentFraction = this.segmentProgress - currentSegment; // Progression relative dans le segment actuel
 
     // Limiter le segment pour rester dans la plage [0, this.cameraSteps.length - 1 - 1]
-    if (currentSegment >= (this.cameraSteps.length - 1)) return
+    if (currentSegment >= this.cameraSteps.length - 1) return;
     // Positions de début et de fin pour le segment actif
 
     const start = this.cameraSteps[Math.abs(currentSegment)];
