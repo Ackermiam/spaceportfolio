@@ -13,7 +13,7 @@
         Jeux 2D, jeux 3D, portfolio ratés mais idées testées, voici un condensé de ce que je fais à côté de mon travail principal. Mon but est d'apprendre de nouvelles notions et aiguiser mes compétences, de projet en projet, afin de pouvoir bientôt offrir des expériences de réalité augmentée et réalité virtuelle, des jeux 3D plus longs et plus travaillés que ceux que je fais actuellement !
       </p>
     </div>
-    <Slider class="Slider"/>
+    <Slider v-if="!isMobile()" class="Slider"/>
   </section>
 </template>
 
@@ -33,6 +33,10 @@ const checkVisibility = () => {
   const rect = sceneFour.value.closest(".HomeFour").getBoundingClientRect();
 
   isSectionVisible.value = rect.top <= 0;
+};
+
+const isMobile = () => {
+  return window.innerWidth <= 900;
 };
 
 onMounted(() => {

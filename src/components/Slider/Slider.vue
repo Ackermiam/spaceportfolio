@@ -97,6 +97,7 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .Slider {
   position: absolute;
+  
   &__container {
     display: none;
 
