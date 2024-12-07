@@ -8,12 +8,19 @@
     <div class="HomeFour__presentation">
       <h2>Mes <br> Projets</h2>
     </div>
+    <div class="HomeFour__presentationText">
+      <p>
+        Jeux 2D, jeux 3D, portfolio ratés mais idées testées, voici un condensé de ce que je fais à côté de mon travail principal. Mon but est d'apprendre de nouvelles notions et aiguiser mes compétences, de projet en projet, afin de pouvoir bientôt offrir des expériences de réalité augmentée et réalité virtuelle, des jeux 3D plus longs et plus travaillés que ceux que je fais actuellement !
+      </p>
+    </div>
+    <Slider class="Slider"/>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 import { Logic } from "../three/sceneFour/scene";
+import Slider from "./Slider/Slider.vue";
 
 const scene = ref();
 const sceneFour = ref();
@@ -46,20 +53,34 @@ onUnmounted(() => {
 <style scoped>
 .HomeFour {
   width: 100vw;
-  height: 400vh;
+  height: 390vh;
   background: rgb(0, 0, 0);
   position: relative;
   z-index: 3;
 }
 
+.Slider {
+  z-index: 1;
+}
+
 .HomeFour__presentation {
   font-family: "Mewatonia";
   color: rgba(185, 253, 255, 0.514);
-  filter: drop-shadow(-8px 5px 0px rgb(252, 47, 47))
+  filter: drop-shadow(-8px 5px 0px rgb(252, 47, 47));
+  padding: 6vw 0 0 6vw;
+  margin-bottom: 150px;
+}
+
+.HomeFour__presentationText {
+  color: rgba(185, 253, 255, 0.842);
+  font-family: "Archivo";
+  font-size: 1.8vw;
+  max-width: 800px;
+  padding-left: 6vw;
+  margin-bottom: 250px;
 }
 
 h2 {
-  padding: 0.8em;
   font-size: 13vw;
   font-family: "Play";
   line-height: 1em;
@@ -70,7 +91,7 @@ h2 {
   width: 100%;
   height: 100%;
   top: 0;
-  z-index: 2;
+  z-index: 0;
   position: absolute;
 }
 
@@ -85,7 +106,20 @@ h2 {
 
 @media (max-width: 900px) {
   h2 {
-    font-size: 14vw;
+    font-size: 17vw;
+  }
+
+  p {
+    font-size: 5vw;
+  }
+
+  .HomeFour__presentation {
+    margin-bottom: 50px;
+    margin-top: 50px;
+  }
+
+  .HomeFour__presentationText {
+    max-width: 60%;
   }
 }
 </style>
