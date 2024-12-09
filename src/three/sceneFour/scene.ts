@@ -13,13 +13,11 @@ export class Logic {
   renderer: WebGLRenderer;
   camera: PerspectiveCamera;
   meshs: any[];
-  mouseXPos: number;
-  mouseYPos: number;
   height: number;
   ref: HTMLElement;
   pixelRatio: number;
-  private observer: IntersectionObserver | null = null;
-  private animationFrameId: number | null = null;
+  observer: IntersectionObserver | null = null;
+  animationFrameId: number | null = null;
 
   constructor(ref: HTMLElement, refToAppend: HTMLElement) {
     const { width, height } = ref.getBoundingClientRect();
@@ -27,8 +25,6 @@ export class Logic {
     this.ref = ref;
     this.meshs = [];
     this.scene = new Scene();
-    this.mouseXPos = 0;
-    this.mouseYPos = 0;
     this.camera = new PerspectiveCamera(
       45,
       width / height

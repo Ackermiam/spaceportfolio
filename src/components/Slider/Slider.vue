@@ -3,6 +3,7 @@
     <div
       class="Slider__container"
       ref="scrollableContent"
+      v-if="!isMobile()"
     >
       <div class="Slider__slider" ref="animatedContent">
         <div
@@ -13,6 +14,23 @@
           @click="redirect(slide.url)"
         >
           <h3 class="Slider__slider__project__title">
+            {{ slide.name }}
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div v-if="isMobile()" class="Slider__containerMobile">
+      <div class="Slider__containerMobile__slider">
+        <div
+          v-for="(slide, index) in slides"
+          :key="index"
+          class="Slider__containerMobile__slider__project"
+          :style="{
+            background: `url(${slide.background})`,
+          }"
+          @click="redirect(slide.url)"
+        >
+          <h3 class="Slider__containerMobile__slider__project__title">
             {{ slide.name }}
           </h3>
         </div>
@@ -55,6 +73,10 @@ const slides: Record<string, string>[] = [
   }
 ];
 
+const isMobile = () => {
+  return window.innerWidth <= 900;
+};
+
 const handleScroll = () => {
   const progress =
     animatedContent.value.offsetTop /
@@ -96,8 +118,12 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .Slider {
-  position: absolute;
-  
+  position: relative;
+
+  @media (min-width: 900px) {
+    position: absolute;
+    }
+
   &__container {
     display: none;
 
@@ -160,6 +186,73 @@ onUnmounted(() => {
         transform: translateX(-50%);
         z-index: 2;
         filter: drop-shadow(-3px 3px 0px rgb(255, 0, 0))
+      }
+    }
+  }
+
+  &__containerMobile {
+    display: flex;
+    align-items: center;
+
+    @media (min-width: 900px) {
+      display: none;
+    }
+
+    &__slider {
+      width: 100vw;
+      padding-bottom: 5px;
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &__project {
+        min-width: 300px;
+        height: 200px;
+        position: relative;
+        margin: 0 25px;
+        cursor: pointer;
+        overflow: hidden;
+        border: 6px solid rgba(185, 253, 255, 0.767);
+        transition: all 0.4s ease;
+        filter: drop-shadow(-5px 5px 0px rgba(252, 47, 47, 0.664));
+        scroll-snap-align: center;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -5px;
+          left: -10px;
+          width: 105%;
+          height: 105%;
+          background: inherit;
+          background-size: cover;
+          background-position: center;
+          filter: blur(2px);
+          transition: all 0.3s ease;
+        }
+
+        &__title {
+          position: absolute;
+          width: 100%;
+          text-align: center;
+          font-family: "Mewatonia";
+          font-size: 3em;
+          color: rgba(185, 253, 255, 0.842);
+          filter: drop-shadow(-3px 3px 0px rgb(255, 0, 0));
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 2;
+          margin: 0;
+          line-height: 25px;
+        }
       }
     }
   }

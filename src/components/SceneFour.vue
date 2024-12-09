@@ -13,7 +13,7 @@
         Jeux 2D, jeux 3D, portfolio ratés mais idées testées, voici un condensé de ce que je fais à côté de mon travail principal. Mon but est d'apprendre de nouvelles notions et aiguiser mes compétences, de projet en projet, afin de pouvoir bientôt offrir des expériences de réalité augmentée et réalité virtuelle, des jeux 3D plus longs et plus travaillés que ceux que je fais actuellement !
       </p>
     </div>
-    <Slider v-if="!isMobile()" class="Slider"/>
+    <Slider class="Slider"/>
   </section>
 </template>
 
@@ -33,10 +33,6 @@ const checkVisibility = () => {
   const rect = sceneFour.value.closest(".HomeFour").getBoundingClientRect();
 
   isSectionVisible.value = rect.top <= 0;
-};
-
-const isMobile = () => {
-  return window.innerWidth <= 900;
 };
 
 onMounted(() => {
@@ -69,7 +65,7 @@ onUnmounted(() => {
 
 .HomeFour__presentation {
   font-family: "Mewatonia";
-  color: rgba(185, 253, 255, 0.514);
+  color: rgba(185, 253, 255, 0.753);
   filter: drop-shadow(-8px 5px 0px rgb(252, 47, 47));
   padding: 6vw 0 0 6vw;
   margin-bottom: 150px;
@@ -117,13 +113,19 @@ h2 {
     font-size: 5vw;
   }
 
+  .HomeFour {
+    height: auto;
+    padding-bottom: 100px;
+    padding-top: 50px;
+  }
+
   .HomeFour__presentation {
     margin-bottom: 50px;
-    margin-top: 50px;
   }
 
   .HomeFour__presentationText {
     max-width: 60%;
+    margin-bottom: 150px;
   }
 }
 </style>
