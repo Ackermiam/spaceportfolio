@@ -70,6 +70,10 @@ export class Logic {
 
     const blackHole = new BlackHole(width);
 
+    const eventLoading = new CustomEvent("loading", {
+      detail: false,
+    });
+
     const loadBlackHole = async () => {
       await blackHole.loadMesh();
       this.meshs.push(blackHole);
@@ -78,6 +82,9 @@ export class Logic {
       this.registerEventListeners();
       this.setupIntersectionObserver();
       this.tick();
+      setTimeout(() => {
+        window.dispatchEvent(eventLoading);
+      }, 1000)
     };
 
     loadBlackHole();
