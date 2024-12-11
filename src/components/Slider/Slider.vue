@@ -52,6 +52,11 @@ const slides: Record<string, string>[] = [
     name: "on-road",
   },
   {
+    background: "/spaceportfolio/assets/mapeditr.PNG",
+    url: "https://ackermiam.github.io/map-editor/",
+    name: "map-editor",
+  },
+  {
     background: "/spaceportfolio/assets/horror.PNG",
     url: "https://ackermiam.github.io/horror-site/",
     name: "horror-test",
