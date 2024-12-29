@@ -47,6 +47,11 @@ const scrollableContent = ref();
 
 const slides: Record<string, string>[] = [
   {
+    background: "/spaceportfolio/assets/labyrinthe.PNG",
+    url: "https://ackermiam.github.io/labyrinthe/",
+    name: "labyrinthe",
+  },
+  {
     background: "/spaceportfolio/assets/onroad.PNG",
     url: "https://ackermiam.github.io/on-road/",
     name: "on-road",
