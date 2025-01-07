@@ -1,12 +1,22 @@
 <template>
   <section class="HomeTwo">
     <div ref="sceneTwo" class="Scene"></div>
-    <div ref="presentationRef" class="HomeTwo__presentation" :style="{ opacity: presentationOpacity }">
+    <div
+      ref="presentationRef"
+      class="HomeTwo__presentation"
+      :style="{ opacity: presentationOpacity }"
+    >
       <h2>
         Qui <br />
         suis-je ?
       </h2>
-      <p> Développeur front-end JavaScript/TypeScript. Depuis quelque temps, la 3D m'intrigue fortement, je me lance donc dans l'apprentissage et la création de petites expériences et jeux sympas avec Three.js. J’ai aussi envie d’explorer des technos immersives comme la réalité virtuelle et augmentée pour enrichir l'expérience utilisateur. </p>
+      <p>
+        Développeur front-end JavaScript/TypeScript. Depuis quelque temps, la 3D
+        m'intrigue fortement, je me lance donc dans l'apprentissage et la
+        création de petites expériences et jeux sympas avec Three.js. J’ai aussi
+        envie d’explorer des technos immersives comme la réalité virtuelle et
+        augmentée pour enrichir l'expérience utilisateur.
+      </p>
     </div>
   </section>
 </template>
@@ -80,7 +90,7 @@ onUnmounted(() => {
 h2 {
   font-family: "Mewatonia";
   line-height: 0.8em;
-  margin: 0 0 .3em 0;
+  margin: 0 0 0.3em 0;
 }
 
 p {

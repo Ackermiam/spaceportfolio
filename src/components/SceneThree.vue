@@ -66,7 +66,10 @@
     </div>
 
     <div class="HomeThree__presentationFive">
-      <img src="/assets/home.png" class="HomeThree__presentationFive__desktop" />
+      <img
+        src="/assets/home.png"
+        class="HomeThree__presentationFive__desktop"
+      />
       <img
         src="/assets/homemob.png"
         class="HomeThree__presentationFive__mobile"
@@ -75,7 +78,9 @@
 
     <div class="HomeThree__end">
       <h2>
-        Et bien <br> plus <br> encore !
+        Et bien <br />
+        plus <br />
+        encore !
       </h2>
     </div>
   </section>
@@ -194,7 +199,9 @@ onUnmounted(() => {
   top: 660vh;
 }
 
-.HomeThree__presentationThree img, .HomeThree__presentationFour img, .HomeThree__presentationFive img {
+.HomeThree__presentationThree img,
+.HomeThree__presentationFour img,
+.HomeThree__presentationFive img {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0px -7px 20px rgba(0, 0, 0, 0.22);
   border-radius: 16px;
   width: 100%;
@@ -220,7 +227,9 @@ onUnmounted(() => {
   display: block;
 }
 
-.HomeThree__title, .HomeThree__end, .HomeThree__nespresso {
+.HomeThree__title,
+.HomeThree__end,
+.HomeThree__nespresso {
   color: rgb(235, 139, 31);
 }
 
@@ -293,7 +302,9 @@ em {
     font-size: 25vw;
   }
 
-  .HomeThree__nespresso, .HomeThree__title, .HomeThree__end {
+  .HomeThree__nespresso,
+  .HomeThree__title,
+  .HomeThree__end {
     text-align: center;
   }
 

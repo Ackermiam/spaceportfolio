@@ -6,14 +6,22 @@
       :class="isSectionVisible ? 'Scene--fixed' : 'Scene--absolute'"
     ></div>
     <div class="HomeFour__presentation">
-      <h2>Mes <br> Projets</h2>
+      <h2>
+        Mes <br />
+        Projets
+      </h2>
     </div>
     <div class="HomeFour__presentationText">
       <p>
-        Jeux 2D, jeux 3D, portfolio ratés mais idées testées, voici un condensé de ce que je fais à côté de mon travail principal. Mon but est d'apprendre de nouvelles notions et aiguiser mes compétences, de projet en projet, afin de pouvoir bientôt offrir des expériences de réalité augmentée et réalité virtuelle, des jeux 3D plus longs et plus travaillés que ceux que je fais actuellement !
+        Jeux 2D, jeux 3D, portfolio ratés mais idées testées, voici un condensé
+        de ce que je fais à côté de mon travail principal. Mon but est
+        d'apprendre de nouvelles notions et aiguiser mes compétences, de projet
+        en projet, afin de pouvoir bientôt offrir des expériences de réalité
+        augmentée et réalité virtuelle, des jeux 3D plus longs et plus
+        travaillés que ceux que je fais actuellement !
       </p>
     </div>
-    <Slider class="Slider"/>
+    <Slider class="Slider" />
   </section>
 </template>
 

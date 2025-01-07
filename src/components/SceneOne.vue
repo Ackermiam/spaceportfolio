@@ -98,12 +98,12 @@ onMounted(() => {
   color: rgba(255, 255, 255, 0.082);
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: "Mewatonia";
   line-height: 0.8em;
   margin: 0;
 }
-
 
 @media (max-width: 900px) {
   .Title__text {
